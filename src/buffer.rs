@@ -47,6 +47,12 @@ impl<T: AsRef<[u8]>> ByteBuf<T> {
     }
 }
 
+impl<T: AsRef<[u8]>> AsRef<[u8]> for ByteBuf<T> {
+    fn as_ref(&self) -> &[u8] {
+        self.inner.as_ref()
+    }
+}
+
 impl<T: AsMut<[u8]>> ByteBuf<T> {
     /// Write the given little-endian `value` field at the given `pos` offset in bytes.
     pub fn set_le<V: WriteBytes>(&mut self, pos: usize, value: V) -> &mut Self {
@@ -58,6 +64,12 @@ impl<T: AsMut<[u8]>> ByteBuf<T> {
     pub fn set_be<V: WriteBytes>(&mut self, pos: usize, value: V) -> &mut Self {
         value.write_bytes_be(&mut self.inner.as_mut()[pos..]);
         self
+    }
+}
+
+impl<T: AsMut<[u8]>> AsMut<[u8]> for ByteBuf<T> {
+    fn as_mut(&mut self) -> &mut [u8] {
+        self.inner.as_mut()
     }
 }
 

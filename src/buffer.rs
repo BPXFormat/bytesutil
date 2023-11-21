@@ -26,6 +26,8 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+use core::fmt::{Debug, Display};
+
 use crate::{ReadBytes, WriteBytes};
 
 /// A java-like wrapper over a buffer of bytes.
@@ -95,6 +97,18 @@ impl<T: PartialEq> PartialEq for ByteBuf<T> {
 }
 
 impl<T: Eq> Eq for ByteBuf<T> {}
+
+impl<T: Debug> Debug for ByteBuf<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        self.inner.fmt(f)
+    }
+}
+
+impl<T: Display> Display for ByteBuf<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        self.inner.fmt(f)
+    }
+}
 
 /// A shortcut to create a stack allocated fixed size [ByteBuf](ByteBuf)
 pub type StaticByteBuf<const N: usize> = ByteBuf<[u8; N]>;

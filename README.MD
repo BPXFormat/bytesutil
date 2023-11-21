@@ -4,10 +4,9 @@
 Yet another byte utility for Rust.
 
 ## Features
-- Decode any type of BPX
-- Encode any type of BPX
-- Encode and decode BPXSD (BPX structured data)
-- Built-in support for BPX packages (type P)
+- A java-like ByteBuf.
+- Support for encoding numbers and booleans with little-endian or big-endian ordering.
+- IO utilities.
 
 ## Usage and development
 

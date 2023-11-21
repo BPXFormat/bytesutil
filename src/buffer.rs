@@ -80,6 +80,22 @@ impl<T: Default> Default for ByteBuf<T> {
     }
 }
 
+impl<T: Clone> Clone for ByteBuf<T> {
+    fn clone(&self) -> Self {
+        Self { inner: self.inner.clone() }
+    }
+}
+
+impl<T: Copy> Copy for ByteBuf<T> {}
+
+impl<T: PartialEq> PartialEq for ByteBuf<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl<T: Eq> Eq for ByteBuf<T> {}
+
 /// A shortcut to create a stack allocated fixed size [ByteBuf](ByteBuf)
 pub type StaticByteBuf<const N: usize> = ByteBuf<[u8; N]>;
 

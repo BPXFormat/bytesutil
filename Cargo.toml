@@ -1,0 +1,23 @@
+[package]
+name = "bytesutil"
+version = "0.1.0"
+authors = ["Yuri Edward <yuri6037@outlook.com>"]
+edition = "2021"
+description = "Yet another byte utility for Rust"
+license = "BSD-3-Clause"
+repository = "https://github.com/BPXFormat/bytesutil"
+readme = "./README.MD"
+keywords = ["byte", "endian", "big-endian", "little-endian", "binary"]
+categories = ["encoding", "rendering::data-formats", "parsing"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[features]
+default = ["std"]
+std = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

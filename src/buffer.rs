@@ -88,6 +88,36 @@ impl<T> ByteBuf<T> {
     }
 }
 
+impl<T> From<T> for ByteBuf<T> {
+    fn from(value: T) -> Self {
+        Self::new(value)
+    }
+}
+
+impl<T: Copy> From<&T> for ByteBuf<T> {
+    fn from(value: &T) -> Self {
+        Self::new(*value)
+    }
+}
+
+impl<T: Copy> From<&mut T> for ByteBuf<T> {
+    fn from(value: &mut T) -> Self {
+        Self::new(*value)
+    }
+}
+
+impl<T: Copy> From<&ByteBuf<T>> for ByteBuf<T> {
+    fn from(value: &ByteBuf<T>) -> Self {
+        *value
+    }
+}
+
+impl<T: Copy> From<&mut ByteBuf<T>> for ByteBuf<T> {
+    fn from(value: &mut ByteBuf<T>) -> Self {
+        *value
+    }
+}
+
 impl<T: Default> Default for ByteBuf<T> {
     fn default() -> Self {
         Self { inner: Default::default() }
@@ -129,12 +159,17 @@ pub type StaticByteBuf<const N: usize> = ByteBuf<[u8; N]>;
 mod tests {
     use crate::{StaticByteBuf, ByteBuf};
 
+    fn test_function<'a, I: Into<ByteBuf<[u8; 16]>>>(_: I) {
+    }
+
     #[test]
     fn basic() {
         let mut buffer = StaticByteBuf::<16>::default();
         buffer.set_le(0, 42).set_be(8, 42.42);
         assert!(buffer.get_le::<i32>(0) == 42);
         assert!(buffer.get_be::<f64>(8) == 42.42);
+        test_function(buffer.set_le(0, 12));
+        test_function([0; 16]);
     }
 
     #[test]

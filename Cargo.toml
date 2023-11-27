@@ -1,6 +1,6 @@
 [package]
 name = "bytesutil"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["Yuri Edward <yuri6037@outlook.com>"]
 edition = "2021"
 description = "Yet another byte utility for Rust"

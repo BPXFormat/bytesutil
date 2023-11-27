@@ -26,7 +26,7 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-use core::fmt::{Debug, Display};
+use core::{fmt::{Debug, Display}, ops::{Index, IndexMut}};
 
 use crate::{ReadBytes, WriteBytes};
 
@@ -85,6 +85,20 @@ impl<T> ByteBuf<T> {
     /// Returns the underlying wrapped bytes-like object.
     pub fn into_inner(self) -> T {
         self.inner
+    }
+}
+
+impl<T: AsRef<[u8]>> Index<usize> for ByteBuf<T> {
+    type Output = u8;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.as_ref()[index]
+    }
+}
+
+impl<T: AsRef<[u8]> + AsMut<[u8]>> IndexMut<usize> for ByteBuf<T> {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.as_mut()[index]
     }
 }
 

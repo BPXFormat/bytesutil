@@ -40,9 +40,15 @@ mod traits;
 
 mod buffer;
 
+#[cfg(feature = "std")]
+mod combined_io;
+
 pub use bytes::*;
 
 #[cfg(feature = "std")]
 pub use traits::*;
 
 pub use buffer::*;
+
+#[cfg(feature = "std")]
+pub use combined_io::*;
